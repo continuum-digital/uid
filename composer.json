@@ -1,0 +1,36 @@
+{
+  "name": "continuum-digital/uid",
+  "description": "Laravel package to generate unique identifiers",
+  "license": "MIT",
+  "require": {
+    "php": "^7.1",
+    "hashids/hashids": "3.0",
+    "laravel/framework": ">=5.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ContinuumDigital\\Uid\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ContinuumDigital\\Uid\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ContinuumDigital\\Uid\\UidServiceProvider"
+      ]
+    }
+  }
+}
