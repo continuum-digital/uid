@@ -15,12 +15,12 @@ composer require continuum-digital/uid
 In your `database.config.php` file, create a new key to configure your uid's:
 ```
     'uid' => [
-        'salt' => '',
-        'minLength' => '',
-        'alphabet' => '',
+        'salt' => '', // Default ''
+        'minLength' => '', // Default 0
+        'alphabet' => '', // Default 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     ],
 ```
-You can set all of them to `null` to use default values.
+Remove the `salt`, `minLength` or `alphabet` to use default values.
 
 ### Database
 
