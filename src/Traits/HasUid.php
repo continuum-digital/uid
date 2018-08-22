@@ -1,11 +1,11 @@
 <?php
 
-namespace ContinuumDigital\Uid;
+namespace ContinuumDigital\Uid\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Hashids\Hashids;
 
-trait UidTrait
+trait HasUid
 {
     /**
      * Generate the uid when the model is being created.
@@ -38,11 +38,11 @@ trait UidTrait
      */
     private static function generateUid()
     {
-        $config = config('services.continuum-digital.uid');
-        $uid = (new Hashids($config['salt'], $config['minLength']))
-            ->encode(microtime());
+        extract(config('database.uid'));
 
-        if (self::publicId($uid)->count() > 0) {
+        $uid = (new Hashids($salt, $minLength, $alphabet))->encode(microtime());
+
+        if (self::uid($uid)->count() > 0) {
             return static::generateUid();
         }
 
