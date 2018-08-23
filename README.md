@@ -1,4 +1,6 @@
-# Laravel Package to generate Unique Identifiers
+# Continuum Agency Uid
+
+Laravel package to create automatic unique nullable identifiers like `u5CVsCnxyXg` for your Eloquent models.
 
 ## Installation
 
