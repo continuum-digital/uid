@@ -8,7 +8,7 @@ use Hashids\Hashids;
 trait HasUid
 {
     /**
-     * Generate the uid when the model is being created.
+     * Generate and fill the uid when the model is being created.
      */
     public static function bootHasUid()
     {
@@ -38,18 +38,53 @@ trait HasUid
      */
     private static function generateUid()
     {
-        $config = config('database.uid');
-
-        $salt = array_get($config, 'salt', '');
-        $minLength = array_get($config, 'minLength', 0);
-        $alphabet = array_get($config, 'alphabet', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
-
-        $uid = (new Hashids($salt, $minLength, $alphabet))->encode(10000*microtime(true));
+        $uid = (new Hashids(self::getSalt(), self::getMinLength(), self::getAlphabet()))
+            ->encode(self::getMicrotimeAsInteger());
 
         if (self::uid($uid)->count() > 0) {
             return static::generateUid();
         }
 
         return $uid;
+    }
+
+    /**
+     * Get 'salt' from config of its default value.
+     *
+     * @return string
+     */
+    private static function getSalt()
+    {
+        return config('database.uid.salt', '');
+    }
+
+    /**
+     * Get 'minLength' from config of its default value.
+     *
+     * @return string
+     */
+    private static function getMinLength()
+    {
+        return config('database.uid.minLength', 0);
+    }
+
+    /**
+     * Get 'alphabet' from config of its default value.
+     *
+     * @return string
+     */
+    private static function getAlphabet()
+    {
+        return config('database.uid.alphabet', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
+    }
+
+    /**
+     * Generate a integer number based in microtime.
+     *
+     * @return int
+     */
+    private static function getMicrotimeAsInteger()
+    {
+        return (int) (10000*microtime(true));
     }
 }
